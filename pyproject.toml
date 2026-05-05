@@ -1,0 +1,16 @@
+[project]
+name = "windhint"
+version = "0.1.0"
+description = "Simple configuration-based font-hinting tools, especially for Windows."
+readme = "README.md"
+requires-python = ">=3.14"
+dependencies = [
+    "pydantic>=2.13.3",
+    "pyyaml>=6.0.3",
+    "tqdm>=4.67.3",
+    "ttfautohint-py>=0.6.0",
+]
+
+[tool.basedpyright]
+reportAny = false
+reportUnusedCallResult = false
