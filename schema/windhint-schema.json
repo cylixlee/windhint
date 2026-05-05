@@ -1,0 +1,54 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/cylixlee/windhint/main/schema/windhint-schema.json",
+  "title": "Windhint Configuration",
+  "description": "Configuration schema for windhint — a YAML-driven batch font hinting tool for ttfautohint.",
+  "type": "object",
+  "properties": {
+    "input-dir": {
+      "type": "string",
+      "description": "Directory containing .ttf font files to hint."
+    },
+    "output-dir": {
+      "type": "string",
+      "description": "Directory where hinted fonts will be written."
+    },
+    "windows-compatibility": {
+      "type": "boolean",
+      "default": true,
+      "description": "Add blue zones for usWinAscent and usWinDescent to avoid clipping."
+    },
+    "fallback-stem-width": {
+      "type": "integer",
+      "default": 50,
+      "description": "Fallback stem width in font units at 2048 UPEM."
+    },
+    "hinting-range-min": {
+      "type": "integer",
+      "default": 8,
+      "description": "Minimum PPEM value for hint sets."
+    },
+    "hinting-range-max": {
+      "type": "integer",
+      "default": 50,
+      "description": "Maximum PPEM value for hint sets."
+    },
+    "hinting-limit": {
+      "type": "integer",
+      "default": 200,
+      "description": "Switch off hinting above this PPEM value; 0 means no limit."
+    },
+    "increase-x-height": {
+      "type": "integer",
+      "default": 14,
+      "description": "Increase x-height for sizes in range 6 <= PPEM <= N; 0 disables this feature."
+    },
+    "stem-width-mode": {
+      "type": "string",
+      "default": "sss",
+      "description": "Stem width mode for grayscale, GDI ClearType, and DW ClearType. A string of three letters with possible values: n (natural), q (quantized), s (strong)."
+    }
+  },
+  "required": ["input-dir", "output-dir"],
+  "additionalProperties": false
+}

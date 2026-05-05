@@ -2,6 +2,8 @@ import os
 import pathlib
 import subprocess
 import sys
+import argparse
+import importlib.resources
 
 import yaml
 from pydantic import BaseModel, Field, ValidationError
@@ -63,7 +65,33 @@ class WindhintConf(BaseModel):
     """
 
 
+def init_config() -> None:
+    confpath = pathlib.Path.cwd() / "windhint.yaml"
+    if confpath.exists():
+        print(f"error: {confpath} already exists in the current directory.", file=sys.stderr)
+        sys.exit(1)
+
+    template = importlib.resources.files("windhint").joinpath("template.yaml").read_text()
+    confpath.write_text(template)
+    print(f"Created {confpath}")
+
+
 def main() -> None:
+    parser = argparse.ArgumentParser(
+        prog="windhint",
+        description="Batch hint TrueType fonts using ttfautohint with a YAML configuration.",
+    )
+    parser.add_argument(
+        "--init",
+        action="store_true",
+        help="Create a windhint.yaml configuration file in the current directory.",
+    )
+    cli_args = parser.parse_args()
+
+    if cli_args.init:
+        init_config()
+        return
+
     confpath: pathlib.Path | None = None
     for candidate in CONFIGURATION_CANDIDATES:
         p = pathlib.Path(os.getcwd()) / candidate
@@ -96,6 +124,14 @@ def main() -> None:
 
     input_dir = pathlib.Path(conf.input_dir).as_posix()
     output_dir = pathlib.Path(conf.output_dir).as_posix()
+
+    try:
+        pathlib.Path(conf.output_dir).relative_to(pathlib.Path(conf.input_dir))
+        print("error: output-dir must not be a subdirectory of input-dir", file=sys.stderr)
+        sys.exit(1)
+    except ValueError:
+        pass
+
     inputs: list[pathlib.Path] = []
     outputs: list[pathlib.Path] = []
     for root, _, files in os.walk(input_dir):

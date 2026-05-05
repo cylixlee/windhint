@@ -1,0 +1,28 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/cylixlee/windhint/main/schema/windhint-schema.json
+
+# Directory containing .ttf font files to hint.
+input-dir: ./source
+
+# Directory where hinted fonts will be written.
+output-dir: ./output
+
+# Add blue zones for usWinAscent and usWinDescent to avoid clipping.
+windows-compatibility: true
+
+# Fallback stem width in font units at 2048 UPEM.
+fallback-stem-width: 50
+
+# Minimum PPEM value for hint sets.
+hinting-range-min: 8
+
+# Maximum PPEM value for hint sets.
+hinting-range-max: 50
+
+# Switch off hinting above this PPEM value; 0 means no limit.
+hinting-limit: 200
+
+# Increase x-height for sizes in range 6 <= PPEM <= N; 0 disables this feature.
+increase-x-height: 14
+
+# Stem width mode. A string of three letters: n (natural), q (quantized), s (strong).
+stem-width-mode: sss
