@@ -1,6 +1,6 @@
 [project]
 name = "windhint"
-version = "0.2.0"
+version = "0.3.0"
 license = "Apache-2.0"
 description = "Simple configuration-based font-hinting tools, especially for Windows."
 readme = "README.md"
