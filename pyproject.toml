@@ -1,6 +1,7 @@
 [project]
 name = "windhint"
-version = "0.1.0"
+version = "0.2.0"
+license = "Apache-2.0"
 description = "Simple configuration-based font-hinting tools, especially for Windows."
 readme = "README.md"
 requires-python = ">=3.14"
@@ -10,6 +11,16 @@ dependencies = [
     "tqdm>=4.67.3",
     "ttfautohint-py>=0.6.0",
 ]
+
+[project.urls]
+Homepage = "https://github.com/cylixlee/windhint"
+
+[project.scripts]
+windhint = "windhint.main:main"
+
+[build-system]
+requires = ["uv_build>=0.9.13,<0.10.0"]
+build-backend = "uv_build"
 
 [tool.basedpyright]
 reportAny = false
