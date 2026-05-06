@@ -25,3 +25,6 @@ build-backend = "uv_build"
 [tool.basedpyright]
 reportAny = false
 reportUnusedCallResult = false
+
+[tool.ruff]
+line-length = 120

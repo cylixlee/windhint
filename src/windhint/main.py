@@ -1,9 +1,9 @@
+import argparse
+import importlib.resources
 import os
 import pathlib
 import subprocess
 import sys
-import argparse
-import importlib.resources
 
 import yaml
 from pydantic import BaseModel, Field, ValidationError
@@ -94,7 +94,8 @@ def main() -> None:
         help="Create a windhint.yaml configuration file in the current directory.",
     )
     parser.add_argument(
-        "-f", "--force",
+        "-f",
+        "--force",
         action="store_true",
         help="Overwrite existing hinted fonts instead of skipping them.",
     )
@@ -111,8 +112,7 @@ def main() -> None:
             confpath = p
             break
     if not confpath:
-        errmsg = f"error: No configuration found ({' || '.join(CONFIGURATION_CANDIDATES)}). Aborting."
-        print(errmsg, file=sys.stderr)
+        print(f"error: No configuration found ({' || '.join(CONFIGURATION_CANDIDATES)}). Aborting.", file=sys.stderr)
         sys.exit(1)
 
     try:
