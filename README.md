@@ -50,9 +50,18 @@ increase-x-height: 14
 stem-width-mode: sss
 ```
 
+## CLI Options
+
+| Option          | Description                                              |
+| --------------- | -------------------------------------------------------- |
+| `--init`        | Generate a `windhint.yaml` configuration template        |
+| `-f`, `--force` | Overwrite existing hinted fonts instead of skipping them |
+
 ## How It Works
 
-windhint walks `input-dir` recursively, finds all `.ttf` files, mirrors the directory structure under `output-dir`, and invokes `ttfautohint` on each file with the parameters from your configuration. A progress bar shows the current file being processed.
+windhint walks `input-dir` recursively, finds all `.ttf` files, mirrors the directory structure under `output-dir`, and invokes `ttfautohint` on each file with the parameters from your configuration. 
+
+By default, fonts that already exist in `output-dir` are skipped — use `--force` to overwrite them.
 
 ## License
 

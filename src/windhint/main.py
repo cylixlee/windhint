@@ -20,7 +20,14 @@ POSTFIX_LEN = 32
 
 class WindhintConf(BaseModel):
     input_dir: str = Field(alias="input-dir")
+    """
+    Directory containing .ttf font files to hint.
+    """
+
     output_dir: str = Field(alias="output-dir")
+    """
+    Directory where hinted fonts will be written.
+    """
 
     windows_compatibility: bool = Field(default=True, alias="windows-compatibility")
     """
@@ -86,6 +93,11 @@ def main() -> None:
         action="store_true",
         help="Create a windhint.yaml configuration file in the current directory.",
     )
+    parser.add_argument(
+        "-f", "--force",
+        action="store_true",
+        help="Overwrite existing hinted fonts instead of skipping them.",
+    )
     cli_args = parser.parse_args()
 
     if cli_args.init:
@@ -139,10 +151,16 @@ def main() -> None:
         mirrorpath = pathlib.Path(rootpath.as_posix().replace(input_dir, output_dir))
         for f in files:
             if f.endswith(".ttf"):
+                output_path = mirrorpath / f
+                if not cli_args.force and output_path.exists():
+                    continue
                 inputs.append(rootpath / f)
-                outputs.append(mirrorpath / f)
+                outputs.append(output_path)
 
     z = list(zip(inputs, outputs))
+    if len(z) == 0:
+        print("Nothing to do.")
+        return
     with tqdm(total=len(z), desc="HINTING") as progress:
         for v, t in z:
             if len(v.name) < POSTFIX_LEN + 3:
